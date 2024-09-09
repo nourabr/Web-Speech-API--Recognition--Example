@@ -9,6 +9,8 @@
     html{
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       text-align: center;
+      background: #181a1b;
+      color: white;
     }
 
     div {
@@ -40,12 +42,20 @@
   </style>
 
   <script>
+
+    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
+
+
     function handleRecord(phrase){
 
       let pressedBtn = event.srcElement
       pressedBtn.disabled = true
-
       phrase = phrase.toLowerCase() // Fix for receiving Uppercases.
+
+      if (isFirefox) {
+        pressedBtn.textContent = "Não suportado";
+        alert(`Parece que o seu navegador não suporta reconhecimento de fala. Tente novamente com um navegador como o Google Chrome.`)
+       }
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
       const recognition = new SpeechRecognition()
