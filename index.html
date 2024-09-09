@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste de Pronúncia</title>
+
+  <style>
+    html{
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      text-align: center;
+    }
+
+    div {
+      margin: 10px 0;
+    }
+
+    button{
+      height: 35px;
+      border-radius: 20px;
+      background-color: #009a3c;
+      color: white;
+      border: 0;
+      padding: 0 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:disabled{
+      cursor: default;
+      background-color: #d44b3c;
+    }
+
+    button::before{
+      content: "";
+      padding: 5px 10px;
+      margin-right: 7px;
+      background-image: url(/icon-microfone.png);
+    }
+  </style>
+
+  <script>
+    function handleRecord(phrase){
+
+      let pressedBtn = event.srcElement
+      pressedBtn.disabled = true
+
+      phrase = phrase.toLowerCase() // Fix for receiving Uppercases.
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+      const recognition = new SpeechRecognition()
+      recognition.lang = "pt-BR"
+
+      recognition.start() 
+
+      recognition.onaudiostart = () =>{
+        pressedBtn.textContent = "Ouvindo..."
+
+      }
+
+      recognition.onaudioend = ()=>{
+        pressedBtn.disabled = false
+        pressedBtn.textContent = "Clique para falar"
+        
+      }
+
+      recognition.onresult = (event)=>{
+
+        let transcription = event.results[0][0].transcript.toLowerCase()
+        let confidence = event.results[0][0].confidence
+
+        //Text to Speech
+        let utterance = new SpeechSynthesisUtterance(`Você disse: ${transcription}`);
+        speechSynthesis.speak(utterance);
+
+        let outputEl = document.querySelector("#speechOutput")
+        outputEl.textContent = `${transcription}`
+
+        if (phrase == transcription){
+          outputEl.style.color = "green"
+          outputEl.style.fontWeight = "bold"
+          outputEl.style.textDecoration = "none"
+        } else{
+          outputEl.style.fontWeight = "normal"
+          outputEl.style.color = "red"
+          outputEl.style.textDecoration = "line-through"
+        }
+
+        console.log(
+          `
+          Transcription: ${transcription}
+          Confidence: ${confidence}
+          `
+        )
+        
+      }
+    }
+  </script>
+
+</head>
+<body>
+  
+  <h1>Teste de Pronúncia</h1>
+  <p>Diga: <strong>Eu sou Estrangeiro</strong></p>
+  <div id="speechOutput"></div>
+  <button class="btnTest" onclick="handleRecord('Eu sou estrangeiro')">Clique para falar</button>
+
+
+</body>
+</html>
