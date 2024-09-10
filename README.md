@@ -11,5 +11,7 @@ O que o script faz:
   - [x] Faz uma simples comparação da transcrição com o texto desejado;
   - [x] Repete o que foi escutado em audio;
 
+![ss](https://github.com/user-attachments/assets/96cef4f9-f129-4df8-886b-471c235792a1)
+
 
 Infelizmente o reconhecimento de fala (Web Speech API) não funciona com o Firefox. Recomendo utilizar o Chrome.
