@@ -50,7 +50,14 @@
 
       let pressedBtn = event.srcElement
       pressedBtn.disabled = true
-      phrase = phrase.toLowerCase() // Fix for receiving Uppercases.
+
+      if (phrase){
+        phrase = phrase.toLowerCase()
+
+      } else {
+        phrase = document.querySelector("#inputText").value.toLowerCase()
+      }
+
 
       if (isFirefox) {
         pressedBtn.textContent = "Não suportado";
@@ -111,9 +118,9 @@
 <body>
   
   <h1>Teste de Pronúncia</h1>
-  <p>Diga: <strong>Eu sou Estrangeiro</strong></p>
+  <p>Diga: <input id="inputText" value="Eu sou Estrangeiro"></p>
   <div id="speechOutput"></div>
-  <button class="btnTest" onclick="verifySpeech('Eu sou estrangeiro')">Clique para falar</button>
+  <button class="btnTest" onclick="verifySpeech()">Clique para falar</button>
 
 
 </body>
