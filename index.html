@@ -46,7 +46,7 @@
     const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
 
-    function handleRecord(phrase){
+    function verifySpeech(phrase){
 
       let pressedBtn = event.srcElement
       pressedBtn.disabled = true
@@ -80,8 +80,8 @@
         let confidence = event.results[0][0].confidence
 
         //Text to Speech
-        let utterance = new SpeechSynthesisUtterance(`Você disse: ${transcription}`);
-        speechSynthesis.speak(utterance);
+        // let utterance = new SpeechSynthesisUtterance(`Você disse: ${transcription}`);
+        // speechSynthesis.speak(utterance);
 
         let outputEl = document.querySelector("#speechOutput")
         outputEl.textContent = `${transcription}`
@@ -113,7 +113,7 @@
   <h1>Teste de Pronúncia</h1>
   <p>Diga: <strong>Eu sou Estrangeiro</strong></p>
   <div id="speechOutput"></div>
-  <button class="btnTest" onclick="handleRecord('Eu sou estrangeiro')">Clique para falar</button>
+  <button class="btnTest" onclick="verifySpeech('Eu sou estrangeiro')">Clique para falar</button>
 
 
 </body>
